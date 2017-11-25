@@ -1,0 +1,5 @@
+Based on Endgame theme
+
+Start in middle of game, with potentially limited health, some items, or other world state already in a state
+that feels explicitly done by the player before they actually start.
+
