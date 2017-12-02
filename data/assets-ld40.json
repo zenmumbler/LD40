@@ -5,6 +5,7 @@
 	"project": "Untitled (LD40)",
 
 	"assets": [
+		{ "name": "tomb", "uri": "data/tomb.obj" },
 		{ "name": "step0", "uri": "data/sound/34253__ddohler__hard-walking_0.mp3" },
 		{ "name": "step1", "uri": "data/sound/34253__ddohler__hard-walking_1.mp3" }
 	]

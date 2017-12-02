@@ -1,0 +1,8 @@
+# Blender MTL File: 'None'
+# Material Count: 2
+
+newmtl Blacktop_Old_01
+Kd 0.640000 0.640000 0.640000
+
+newmtl material
+Kd 1.000000 1.000000 1.000000
