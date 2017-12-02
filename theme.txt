@@ -1,0 +1,82 @@
+
+
+The More You Have, The Worse It Is
+===============================================================================
+
+> Implicit but required 2nd theme: Use and test your 3D engine
+
+
+Gamedev meaning of theme:
+
+Linked Resources
+a) The more of something you get, the less there is something else or,
+b) The more of something you get, the more of something else appears
+
+Both the left and right hand side can be 1 or multiple resources / items / characters, enemies, etc.
+
+
+1. Ducks in a pond (2D)
+------------------
+
+Player controls mother duck with several ducklings trailing her.
+Game is round-based using a day as 1 round -> SHORT, maybe 30 secs
+In 1 day you have to find enough food for ducklings, more ducks, more food.
+Over time, predators will start trying to steal your ducks.
+Food quantity will go up, but slowly.
+Other obstacles/hazards in the water: algae/pigeons, oil spills.
+At end of round, food is consumed and unfed ducks die.
+Game ends when you have no more ducks
+
+Keywords: infinite, unwinnable, scored, timed, resource mgmt, survival
+
+
+2. Tribbles?
+------------
+
+Large volumes of critters do something, clog things up probably.
+
+
+3. Power / Health tradeoff
+--------------------------
+
+As you gain some kind of strength/power, it adds to strain, lowering HP.
+Absorb and release power at will.
+How about vision / perception getting worse? Render artifacts, etc.
+Affecting controls
+
+Absorb souls for power, release them by performing certain actions (requiring a # of souls)
+Looking at enemies costs HP, but most do so to absorb souls.
+As you gain more souls, max HP decreases, but HP is auto-regen.
+
+Keywords: balancing act
+
+
+4. Tourists in city (2D)
+-------------------
+
+Tourists flood a city center
+Change types of stores from local to SB/waffles/donuts/trinkets
+Sic zombies / nationalists / bums on them
+Ban certain items (for a specified time?)
+Like anti-simcity / anti-sims
+
+
+5. Mo Money, Mo Trouble
+-----------------------
+
+Where Money can also be options, choices, opinions, pathways, etc.
+
+
+6. Visions / Apparitions (see 3)
+------------------------
+
+You are trying to get something done.
+You see things that are not actually there, which drain your sanity
+if you look at them or get too close.
+Complete tasks before you go mental.
+
+
+7. Overpopulation
+-----------------
+
+Yep

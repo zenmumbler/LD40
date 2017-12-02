@@ -3,3 +3,60 @@ Based on Endgame theme
 Start in middle of game, with potentially limited health, some items, or other world state already in a state
 that feels explicitly done by the player before they actually start.
 
+--------
+
+from theme.txt:
+
+As you gain some kind of strength/power, it adds to strain, lowering HP.
+Absorb and release power at will.
+How about vision / perception getting worse? Render artifacts, etc.
+Affecting controls
+
+Absorb souls for power, release them by performing certain actions (requiring a # of souls)
+Looking at enemies costs HP, but most do so to absorb souls.
+As you gain more souls, max HP decreases, but HP is auto-regen.
+
+Keywords: balancing act
+
+--------
+
+1 scene
+
+Player explores an area, building up something in their body/mind, some uncontrollable power.
+As this energy grows, the player starts getting problems in terms of vision and control,
+like a sanity meter. During the game, it only builds up and leads to some finale where 
+everything is at an extreme, maybe with a chase / escape scene.
+
+Q: what is causing the energy build-up?
+- could be based on time
+- fixed locations increasing the energy to exactly control what effects happen when
+- absorb some kind of material in various places, same as above but more explicit
+- some other interaction
+
+Q: who is the player?
+- no special powers, just a human being, also no fighting skills, etc.
+
+Q: what is the player doing and why?
+- commanded to fetch some stuff from a place, like treasure or a McGuffin from a temple/cave/house
+- self initiated, wants to gain power or find something
+	- is the player aware from the start that this energy is here?
+
+Q: what is the end condition / goal?
+- get what you came for and get out
+- player will refuse to leave before all places are explored / all energy is built up
+- either:
+	- explore all spaces, treasure is in last place
+	- level guides progress, effecting specific travel path back to exit
+
+Q: what is the location?
+- 
+
+Q: what is the challenge?
+- primarily the control and vision of the player deteriorating
+- an Amnesia monster coming to check stuff out at critical times, will disappear 
+	- danger of dumb-ass monster syndrome
+	- monsters should give chase if player spotted + delay
+	- monsters should be invisible / shadow like things, sound based (as obscure as possible to hide dumbness)
+	- get caught = dead, no hits or scratches or whatnot
+- final monster will be a chase back to exit after finding last part
+	- like the Amnesia shadow after water level and prison. Lag = dead, but now with shakycam
