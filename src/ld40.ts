@@ -4,10 +4,13 @@
 /// <reference path="./imports.ts" />
 /// <reference path="./sfx.ts" />
 /// <reference path="./entities.ts" />
+/// <reference path="./player.ts" />
 
 
 class MainScene implements sd.SceneDelegate {
 	scene: sd.Scene;
+	player: PlayerController;
+	sound: Sound;
 
 	willLoadAssets() {
 		dom.show(".overlay.loading");
@@ -22,12 +25,69 @@ class MainScene implements sd.SceneDelegate {
 	}
 
 	setup() {
-		this.scene.camera.perspective(65, 0.1, 100);
-		
+		const scene = this.scene;
+		const cache = scene.assets;
+
+		this.sound = new Sound(scene.ad, {
+			steps: [
+				cache("audio", "step0"),
+				cache("audio", "step1")
+			],
+			// music: undefined
+		});
+
+		const standard = scene.rw.effectByName("standard")!;
+		// const skybox = scene.rw.effectByName("simple-skybox")!;
+
+		const makePBRMat = (mat: asset.Material) => {
+			const data = standard.makeEffectData() as render.effect.StandardEffectData;
+			const pbr = mat as asset.StandardMaterial;
+
+			vec3.copy(data.tint, pbr.colour.baseColour);
+			vec3.copy(data.emissiveFactor, pbr.emissiveFactor);
+			if (vec3.len(pbr.emissiveFactor) > 0) {
+				data.emissiveFactor[3] = 1.0;
+			}
+			if (pbr.colour.colourTexture) {
+				data.diffuse = pbr.colour.colourTexture.texture;
+			}
+			if (pbr.normalTexture) {
+				data.normal = pbr.normalTexture.texture;
+			}
+			vec4.copy(data.texScaleOffset, [pbr.uvScale[0], pbr.uvScale[1], pbr.uvOffset[0], pbr.uvOffset[1]]);
+
+			return data;
+		};
+
+		scene.camera.perspective(60, 0.1, 100);
+
+		// --------- LEVEL GEOMETRY
+		const tombModel = cache("model", "tomb");
+		const tombShape = physics.makeShape({
+			type: physics.PhysicsShapeType.Mesh,
+			geom: tombModel.geom
+		})!;
+
+		makeEntity(scene, {
+			geom: tombModel.geom,
+			renderer: {
+				materials: tombModel.materials.map(mat => makePBRMat(mat))
+			},
+			rigidBody: {
+				shape: tombShape,
+				mass: 0,
+				friction: 0.7
+			}
+		});
+
+		// ---------- PLAYER
+		this.player = new PlayerController(dom.$1("canvas"), [0, 1.1, 3], scene, this.sound);
 	}
 
-	update(_timeStep: number) {
-
+	update(timeStep: number) {
+		const player = this.player;
+		player.step(timeStep);
+		this.scene.camera.lookAt(player.view.pos, player.view.focusPos, player.view.up);
 	}
 }
 

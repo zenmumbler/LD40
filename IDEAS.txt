@@ -84,6 +84,7 @@ Total Runtime: 2-4 mins + puzzle solving time
 	- danger music
 	- gargl
 	- glabargl
+	- fire torch
 - title screen with:
 	- keyboard options
 	- viewport size / fullscreen
