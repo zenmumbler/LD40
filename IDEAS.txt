@@ -47,9 +47,15 @@ Q: what is the end condition / goal?
 - either:
 	- explore all spaces, treasure is in last place
 	- level guides progress, effecting specific travel path back to exit
+- 1 artifact in 3 or 4 pieces, scattered about the place in coffins
+- maybe some puzzles to open these coffins?
 
 Q: what is the location?
-- 
+- tomb in graveyard, let's keep things classical
+- dungeon like, hallways and rooms
+- enough room to potentially evade chaser
+- dark to hide boringness
+- maybe a cel/toon shaded like style for simplicity?
 
 Q: what is the challenge?
 - primarily the control and vision of the player deteriorating
@@ -60,3 +66,38 @@ Q: what is the challenge?
 	- get caught = dead, no hits or scratches or whatnot
 - final monster will be a chase back to exit after finding last part
 	- like the Amnesia shadow after water level and prison. Lag = dead, but now with shakycam
+
+-------------
+
+Total Runtime: 2-4 mins + puzzle solving time
+
+### MUST HAVES
+- tomb level layout with 2 to 4 coffin rooms
+- inventory state machine and colliders acting on it
+	- also player interactable colliders / triggers
+- sluggish controls / visuals based on progress
+- simple artifact and part models
+- some textures
+- a shade / shadow / baddie
+- appropriate music and sounds
+	- base music
+	- danger music
+	- gargl
+	- glabargl
+- title screen with:
+	- keyboard options
+	- viewport size / fullscreen
+- ending screen
+
+### WOULD LIKE TO HAVES
+- final chase scene (corridor)
+- shades showing up and disappearing
+- puzzles to open each tomb
+- doors that only open if you have > n parts of the artifact
+- a nice base shader for interesting visual style
+- some nods to Frictional classics
+
+### NICE TO HAVES
+- other atmospheric stuff, lighting effects, etc.
+- watery rooms for extra chills
+- proper collision mesh
