@@ -219,7 +219,7 @@ class PlayerController {
 	}
 
 	step(timeStep: number) {
-		const maxAccel = 60;
+		const maxAccel = 45;
 		let accel = 0, sideAccel = 0;
 
 		if (control.keyboard.down(control.Key.UP) || control.keyboard.down(this.keyForKeyCommand(KeyCommand.Forward))) {
