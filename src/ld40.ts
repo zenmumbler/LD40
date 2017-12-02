@@ -3,6 +3,7 @@
 
 /// <reference path="./imports.ts" />
 /// <reference path="./sfx.ts" />
+/// <reference path="./entities.ts" />
 
 
 class MainScene implements sd.SceneDelegate {
@@ -22,7 +23,7 @@ class MainScene implements sd.SceneDelegate {
 
 	setup() {
 		this.scene.camera.perspective(65, 0.1, 100);
-
+		
 	}
 
 	update(_timeStep: number) {
