@@ -11,6 +11,7 @@ class MainScene implements sd.SceneDelegate {
 	scene: sd.Scene;
 	player: PlayerController;
 	sound: Sound;
+	butan: EntityInfo;
 
 	willLoadAssets() {
 		dom.show(".overlay.loading");
@@ -82,12 +83,73 @@ class MainScene implements sd.SceneDelegate {
 
 		// ---------- PLAYER
 		this.player = new PlayerController(dom.$1("canvas"), [0, 1.1, 3], scene, this.sound);
+
+		// ---------- TEST PILLAR
+		const lite = makePBRMat(tombModel.materials[0]);
+		const dark = makePBRMat(tombModel.materials[1]);
+
+		const slab = makeEntity(scene, {
+			transform: {
+				position: [0, .8, 13],
+				rotation: quat.fromEuler(Math.PI, 0, math.deg2rad(215))
+			},
+			geom: geometry.gen.generate(new geometry.gen.Box({
+				width: 1, height: 0.1, depth: 1
+			})),
+			renderer: {
+				materials: [lite]
+			},
+			rigidBody: {
+				mass: 0,
+				shape: physics.makeShape({
+					type: physics.PhysicsShapeType.Box,
+					halfExtents: [.5, .05, .5],
+				})!
+			}
+		});
+
+		const oos = 1 / 7;
+		const hoos = oos / 2;
+		const buttonShape = physics.makeShape({
+			type: physics.PhysicsShapeType.Box,
+			halfExtents: [oos, .06, oos]
+		})!;
+		this.butan = makeEntity(scene, {
+			parent: slab.transform,
+			transform: {
+				position: [-.5 + hoos + oos, .04, -.5 + hoos + oos]
+			},
+			geom: geometry.gen.generate(new geometry.gen.Box({
+				width: oos, height: .06, depth: oos
+			})),
+			renderer: {
+				materials: [dark]
+			},
+			rigidBody: {
+				mass: 0,
+				shape: buttonShape,
+				isTrigger: true,
+				isKinematic: true
+			}
+		});
+
+		// ----- finish up
+		const rcb = new render.RenderCommandBuffer();
+		for (const geom of geomsToAllocate) {
+			rcb.allocate(geom);
+		}
+		scene.rw.rd.dispatch(rcb);
 	}
 
 	update(timeStep: number) {
+		const scene = this.scene;
 		const player = this.player;
 		player.step(timeStep);
 		this.scene.camera.lookAt(player.view.pos, player.view.focusPos, player.view.up);
+
+		if (control.keyboard.pressed(control.Key.E)) {
+			scene.physicsWorld.rayCast(player.view.pos, player.view.focusPos);
+		}
 	}
 }
 
