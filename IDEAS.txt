@@ -72,6 +72,9 @@ Q: what is the challenge?
 Total Runtime: 2-4 mins + puzzle solving time
 
 ### MUST HAVES
+
+#### Day 2
+
 - tomb level layout with 2 to 4 coffin rooms
 - inventory state machine and colliders acting on it
 	- also player interactable colliders / triggers
@@ -79,6 +82,9 @@ Total Runtime: 2-4 mins + puzzle solving time
 - simple artifact and part models
 - some textures
 - a shade / shadow / baddie
+
+#### Day 3
+
 - appropriate music and sounds
 	- base music
 	- danger music
