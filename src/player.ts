@@ -25,25 +25,28 @@ class PlayerView {
 			orientation: Ammo.AxisIndex.Y
 		})!;
 
-		const ent = scene.entities.create();
-		this.rot_ = quat.fromEuler(0, this.angleY_, this.angleX_);
-		this.transform_ = scene.transforms.create(ent, { position: initialPos, rotation: this.rot_ });
-		this.collider_ = scene.colliders.create(ent, {
+		const ei = makeEntity(scene, {
+			transform: {
+				position: initialPos,
+				rotation: quat.fromEuler(0, this.angleY_, this.angleX_)
+			},
 			rigidBody: {
 				mass: this.MASS,
 				shape: this.shape_,
 				rotationConstraints: [true, false, true],
 				isScripted: true
+			},
+			light: {
+				type: entity.LightType.Point,
+				colour: [1, 1, 1],
+				range: 15,
+				intensity: .8
 			}
 		});
-		this.rigidBody_ = scene.colliders.rigidBody(this.collider_);
 
-		scene.lights.create(ent, {
-			type: entity.LightType.Point,
-			colour: [1, 1, 1],
-			range: 15,
-			intensity: .8
-		});
+		this.transform_ = ei.transform;
+		this.collider_ = ei.collider;
+		this.rigidBody_ = scene.colliders.rigidBody(this.collider_);
 
 		this.tempBV3_ = new Ammo.btVector3();
 		this.tempTX_ = new Ammo.btTransform();
@@ -197,7 +200,7 @@ class PlayerController {
 	handleStepSounds() {
 		if (this.view.moving) {
 			if (this.stepSoundTimer_ === -1) {
-				this.stepSoundTimer_ = setInterval(() => { this.sfx.play(SFX.FootStep); }, 300);
+				this.stepSoundTimer_ = setInterval(() => { this.sfx.play(SFX.FootStep); }, 500);
 			}
 		}
 		else {
