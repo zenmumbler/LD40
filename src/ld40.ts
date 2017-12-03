@@ -112,15 +112,15 @@ class MainScene implements sd.SceneDelegate {
 		const hoos = oos / 2;
 		const buttonShape = physics.makeShape({
 			type: physics.PhysicsShapeType.Box,
-			halfExtents: [oos, .06, oos]
+			halfExtents: [oos, .04, oos]
 		})!;
 		this.butan = makeEntity(scene, {
 			parent: slab.transform,
 			transform: {
-				position: [-.5 + hoos + oos, .04, -.5 + hoos + oos]
+				position: [-.5 + hoos + oos, .08, -.5 + hoos + oos]
 			},
 			geom: geometry.gen.generate(new geometry.gen.Box({
-				width: oos, height: .06, depth: oos
+				width: oos, height: .08, depth: oos
 			})),
 			renderer: {
 				materials: [dark]
@@ -152,9 +152,9 @@ class MainScene implements sd.SceneDelegate {
 			vec3.scaleAndAdd(ray, player.view.pos, ray, 2);
 			const arb = scene.physicsWorld.rayCastClosest(player.view.pos, ray);
 			if (arb) {
-				const ent = scene.colliders.identifyEntity(arb);
-				if (ent === 4) {
-					alert("woo!");
+				const coll = scene.colliders.identify(arb);
+				if (coll === this.butan.collider) {
+					scene.transforms.translate(this.butan.transform, [0, -.04, 0]);
 				}
 			}
 		}
