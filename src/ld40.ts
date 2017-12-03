@@ -148,7 +148,15 @@ class MainScene implements sd.SceneDelegate {
 		this.scene.camera.lookAt(player.view.pos, player.view.focusPos, player.view.up);
 
 		if (control.keyboard.pressed(control.Key.E)) {
-			scene.physicsWorld.rayCast(player.view.pos, player.view.focusPos);
+			const ray = vec3.sub([], player.view.focusPos, player.view.pos);
+			vec3.scaleAndAdd(ray, player.view.pos, ray, 2);
+			const arb = scene.physicsWorld.rayCastClosest(player.view.pos, ray);
+			if (arb) {
+				const ent = scene.colliders.identifyEntity(arb);
+				if (ent === 4) {
+					alert("woo!");
+				}
+			}
 		}
 	}
 }
