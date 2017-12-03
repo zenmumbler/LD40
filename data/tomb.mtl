@@ -1,8 +1,37 @@
 # Blender MTL File: 'None'
-# Material Count: 2
+# Material Count: 11
+
+newmtl Blacktop_New
+map_Kd textures/Blacktop_New.jpg
 
 newmtl Blacktop_Old_01
-Kd 0.640000 0.640000 0.640000
+map_Kd textures/Blacktop_Old_01.jpg
+
+newmtl Brick_Rough_Tan
+map_Kd textures/Brick_Rough_Tan.jpg
+
+newmtl Granite_Brown
+map_Kd textures/Granite_Brown.jpg
+
+newmtl Granite_Dark_Gray
+map_Kd textures/Granite_Dark_Gray.jpg
+
+newmtl Metal_Silver
+map_Kd textures/Metal_Silver.jpg
+
+newmtl Resin_Blue
+map_Kd textures/Resin_Blue.jpg
+
+newmtl Wax_01
+map_Kd textures/Wax_01.jpg
+
+newmtl Wax_02
+map_Kd textures/Wax_02.jpg
 
 newmtl material
 Kd 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+
+newmtl material_5
+Kd 0.996078 0.996078 0.996078
+Ke 1.000000 1.000000 1.000000

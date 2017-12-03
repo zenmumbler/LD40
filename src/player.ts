@@ -12,7 +12,7 @@ class PlayerView {
 	private rigidBody_: Ammo.btRigidBody;
 	private tempBV3_: Ammo.btVector3;
 	private tempTX_: Ammo.btTransform;
-	readonly HEIGHT = 1.7;
+	readonly HEIGHT = 1.8;
 	readonly MASS = 70;
 
 	constructor(public initialPos: sd.Float3, private scene: sd.Scene) {
