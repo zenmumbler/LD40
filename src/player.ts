@@ -84,6 +84,10 @@ class PlayerView {
 		vec3.scale(this.velocity_, this.velocity_, 0.85);
 		if (vec3.length(this.velocity_) < 0.01) {
 			vec3.set(this.velocity_, 0, 0, 0);
+			this.rigidBody_.setDamping(1, 1);
+		}
+		else {
+			this.rigidBody_.setDamping(0, 0);
 		}
 
 		const lv = this.rigidBody_.getLinearVelocity();
