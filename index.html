@@ -3,6 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<title>Untitled - a Ludum Dare 40 Entry by @zenmumbler</title>
+	<link href="https://fonts.googleapis.com/css?family=Anaheim" rel="stylesheet">
 	<style>
 		body {
 			margin: 0;
@@ -38,18 +39,17 @@
 		}
 
 		#stage {
-			/*display: none;*/
 			position: absolute;
 			z-index: 3;
 		}
 
 		.overlay {
+			font-family: Anaheim, Helvetica, serif;
 			position: absolute;
 			z-index: 4;
 			width: 100%;
 			height: 100%;
 			display: none;
-			color: #999;
 			font-size: 22px;
 		}
 
@@ -70,7 +70,6 @@
 			top: 340px;
 			width: 100%;
 			text-align: center;
-			font-size: 16px;
 		}
 
 		p.thx {
@@ -92,7 +91,10 @@
 			text-align: center;
 			left: 0;
 			right: 0;
-			bottom: 35%;
+			top: 60%;
+			color: white;
+			font-size: 26px;
+			text-shadow: 0 0 3px rgb(60, 5, 92);
 		}
 
 
@@ -201,6 +203,9 @@
 			<div class="bar">
 				<div class="progress"></div>
 			</div>
+		</div>
+		<div class="overlay messages">
+			<p></p>
 		</div>
 	</div>
 	<div class="controls">
