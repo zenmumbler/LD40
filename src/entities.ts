@@ -72,3 +72,9 @@ function makePBRMat(scene: sd.Scene, mat: asset.Material) {
 
 	return data;
 }
+
+interface Interactable {
+	hover(ent: entity.Entity): boolean;
+	blur(ent: entity.Entity): boolean;
+	interact(ent: entity.Entity): boolean;
+}
