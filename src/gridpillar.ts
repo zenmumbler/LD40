@@ -37,7 +37,7 @@ class GridPillar implements Interactable {
 		const butan = this.butans.get(ent);
 		if (butan) {
 			const mats = this.scene.renderers.materials(butan.comp.renderer) as effect.StandardEffectData[];
-			vec4.copy(mats[0].emissiveFactor, [0.2, 0.2, 0.2, 1]);
+			vec4.copy(mats[0].emissiveFactor, [0.3, 0.3, 0.3, 1]);
 			return true;
 		}
 		return false;
