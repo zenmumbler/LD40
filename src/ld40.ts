@@ -5,13 +5,39 @@
 /// <reference path="./sfx.ts" />
 /// <reference path="./entities.ts" />
 /// <reference path="./player.ts" />
+/// <reference path="./gamestate.ts" />
 
+class Mensajes {
+	timer = 0;
+	msg = "";
+
+	constructor(public elem: HTMLElement) {
+	}
+
+	gameStateChanged(gs: GameState) {
+		if (this.msg === gs.message) {
+			return;
+		}
+		this.msg = gs.message;
+
+		if (this.msg.length) {
+			dom.$1("p", this.elem).textContent = gs.message.replace(/\n/g, "<br>");
+			this.elem.style.display = "block";
+		}
+		else {
+			this.elem.style.display = "none";
+		}
+	} 
+}
 
 class MainScene implements sd.SceneDelegate {
 	scene: sd.Scene;
+	gameState: GameState;
 	player: PlayerController;
 	sound: Sound;
+	msg: Mensajes;
 	ux: Interactable[] = [];
+	framers: Updateable[] = [];
 
 	willLoadAssets() {
 		dom.show(".overlay.loading");
@@ -25,9 +51,19 @@ class MainScene implements sd.SceneDelegate {
 		dom.hide(".overlay.loading");
 	}
 
+	gameStateChanged(_gs: GameState) {
+
+	}
+
 	setup() {
 		const scene = this.scene;
 		const cache = scene.assets;
+
+		this.gameState = new GameState();
+		this.gameState.listen(this);
+
+		this.msg = new Mensajes(dom.$1("div.messages"));
+		this.gameState.listen(this.msg);
 
 		this.sound = new Sound(scene.ad, {
 			steps: [
@@ -54,7 +90,7 @@ class MainScene implements sd.SceneDelegate {
 			rigidBody: {
 				shape: tombShape,
 				mass: 0,
-				friction: 0.7
+				friction: 1
 			}
 		});
 
@@ -62,7 +98,16 @@ class MainScene implements sd.SceneDelegate {
 		this.player = new PlayerController(dom.$1("canvas"), [-26, 4.1, 32], scene, this.sound);
 
 		// ----- Interactables
-		this.ux.push(new GridPillar(scene, cache, this.sound));
+		this.ux.push(new GridPillar(this.gameState, scene, cache, this.sound));
+		this.ux.push(new Artifact("A", this.gameState, scene, cache, this.sound));
+		this.ux.push(new Artifact("B", this.gameState, scene, cache, this.sound));
+		this.ux.push(new Artifact("C", this.gameState, scene, cache, this.sound));
+
+		for (const ia of this.ux) {
+			if (isUpdateable(ia)) {
+				this.framers.push(ia);
+			}
+		}
 		
 		// ----- finish up
 		allocGeoms(scene);
@@ -110,6 +155,11 @@ class MainScene implements sd.SceneDelegate {
 					break;
 				}
 			}
+		}
+
+		// send update event to those interested
+		for (const ua of this.framers) {
+			ua.update(timeStep);
 		}
 	}
 }
