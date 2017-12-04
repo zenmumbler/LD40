@@ -51,3 +51,24 @@ function makeEntity(scene: sd.Scene, options: EntityCreateOptions): EntityInfo {
 
 	return info;
 }
+
+function makePBRMat(scene: sd.Scene, mat: asset.Material) {
+	const standard = scene.rw.effectByName("standard")!;
+	const data = standard.makeEffectData() as render.effect.StandardEffectData;
+	const pbr = mat as asset.StandardMaterial;
+
+	vec3.copy(data.tint, pbr.colour.baseColour);
+	vec3.copy(data.emissiveFactor, pbr.emissiveFactor);
+	if (vec3.len(pbr.emissiveFactor) > 0) {
+		data.emissiveFactor[3] = 1.0;
+	}
+	if (pbr.colour.colourTexture) {
+		data.diffuse = pbr.colour.colourTexture.texture;
+	}
+	if (pbr.normalTexture) {
+		data.normal = pbr.normalTexture.texture;
+	}
+	vec4.copy(data.texScaleOffset, [pbr.uvScale[0], pbr.uvScale[1], pbr.uvOffset[0], pbr.uvOffset[1]]);
+
+	return data;
+}

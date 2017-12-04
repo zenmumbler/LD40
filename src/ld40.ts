@@ -37,29 +37,6 @@ class MainScene implements sd.SceneDelegate {
 			// music: undefined
 		});
 
-		const standard = scene.rw.effectByName("standard")!;
-		// const skybox = scene.rw.effectByName("simple-skybox")!;
-
-		const makePBRMat = (mat: asset.Material) => {
-			const data = standard.makeEffectData() as render.effect.StandardEffectData;
-			const pbr = mat as asset.StandardMaterial;
-
-			vec3.copy(data.tint, pbr.colour.baseColour);
-			vec3.copy(data.emissiveFactor, pbr.emissiveFactor);
-			if (vec3.len(pbr.emissiveFactor) > 0) {
-				data.emissiveFactor[3] = 1.0;
-			}
-			if (pbr.colour.colourTexture) {
-				data.diffuse = pbr.colour.colourTexture.texture;
-			}
-			if (pbr.normalTexture) {
-				data.normal = pbr.normalTexture.texture;
-			}
-			vec4.copy(data.texScaleOffset, [pbr.uvScale[0], pbr.uvScale[1], pbr.uvOffset[0], pbr.uvOffset[1]]);
-
-			return data;
-		};
-
 		scene.camera.perspective(60, 0.1, 100);
 
 		// --------- LEVEL GEOMETRY
@@ -72,7 +49,7 @@ class MainScene implements sd.SceneDelegate {
 		makeEntity(scene, {
 			geom: tombModel.geom,
 			renderer: {
-				materials: tombModel.materials.map(mat => makePBRMat(mat))
+				materials: tombModel.materials.map(mat => makePBRMat(scene, mat))
 			},
 			rigidBody: {
 				shape: tombShape,
