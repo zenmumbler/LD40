@@ -7,7 +7,7 @@ interface SlideButan {
 class SlidePillar implements Interactable {
 	private butans = new Map<entity.Entity, SlideButan>();
 	private solved = false;
-	private correct = [6, 5, 0, 4, 1];
+	private correct = [6, 5, 1, 3, 7];
 	private sequence: number[] = [];
 	private busy = false;
 
@@ -34,7 +34,7 @@ class SlidePillar implements Interactable {
 					this.busy = false;
 					this.reset();
 					// play "reset"
-				}, 100);
+				}, 350);
 			}
 		}
 	}
