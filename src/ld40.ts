@@ -65,11 +65,7 @@ class MainScene implements sd.SceneDelegate {
 		this.ux.push(new GridPillar(scene, cache, this.sound));
 		
 		// ----- finish up
-		const rcb = new render.RenderCommandBuffer();
-		for (const geom of geomsToAllocate) {
-			rcb.allocate(geom);
-		}
-		scene.rw.rd.dispatch(rcb);
+		allocGeoms(scene);
 	}
 
 	private inFocus: entity.Entity = 0;

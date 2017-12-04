@@ -1,3 +1,15 @@
+let geomsToAllocate: geometry.Geometry[] = [];
+
+function allocGeoms(scene: sd.Scene) {
+	console.info("allocGeoms", geomsToAllocate.length);
+	const rcb = new render.RenderCommandBuffer();
+	for (const geom of geomsToAllocate) {
+		rcb.allocate(geom);
+	}
+	geomsToAllocate = [];
+	scene.rw.rd.dispatch(rcb);
+}
+
 interface EntityCreateOptions {
 	parent?: entity.TransformInstance;
 	transform?: entity.Transform;
@@ -6,8 +18,6 @@ interface EntityCreateOptions {
 	renderer?: entity.MeshRendererDescriptor;
 	light?: entity.Light;
 }
-
-const geomsToAllocate: geometry.Geometry[] = [];
 
 interface EntityInfo {
 	entity: entity.Entity;
