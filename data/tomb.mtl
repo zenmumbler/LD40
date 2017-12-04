@@ -20,13 +20,13 @@ newmtl Metal_Silver
 map_Kd textures/Metal_Silver.jpg
 
 newmtl Resin_Blue
-map_Kd textures/Resin_Blue.jpg
+map_Kd -s .46 .46 -o -.1 -.32 textures/numerals.png
 
 newmtl Wax_01
-map_Kd textures/Wax_01.jpg
+map_Kd -s .46 .46 -o .05 .15 textures/numeralpath.png
 
 newmtl Wax_02
-map_Kd textures/Wax_02.jpg
+map_Kd -s .5 .5 -o -.05 -.1 textures/gridmarkers.png
 
 newmtl material
 Kd 1.000000 1.000000 1.000000
