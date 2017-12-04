@@ -1,3 +1,7 @@
+function srgb8Color(r: number, g: number, b: number) {
+	return [Math.pow(r / 255, 2.2), Math.pow(g / 255, 2.2), Math.pow(b / 255, 2.2)];
+}
+
 let geomsToAllocate: geometry.Geometry[] = [];
 
 function allocGeoms(scene: sd.Scene) {
