@@ -47,8 +47,7 @@ class GameState {
 
 	showMessage(m: string) {
 		this.message_ = m;
-		const duration = 1000 + m.split(" ").length * 250;
-		console.info("DU", duration);
+		const duration = 1500 + m.split(" ").length * 275;
 		if (this.messageEndTimer_) {
 			clearTimeout(this.messageEndTimer_);
 		}
