@@ -72,20 +72,46 @@ class MainScene implements sd.SceneDelegate {
 		scene.rw.rd.dispatch(rcb);
 	}
 
+	private inFocus: entity.Entity = 0;
+
 	update(timeStep: number) {
 		const scene = this.scene;
 		const player = this.player;
 		player.step(timeStep);
 		this.scene.camera.lookAt(player.view.pos, player.view.focusPos, player.view.up);
 
-		if (control.keyboard.pressed(control.Key.E)) {
-			const ray = vec3.sub([], player.view.focusPos, player.view.pos);
-			vec3.scaleAndAdd(ray, player.view.pos, ray, 2);
-			const arb = scene.physicsWorld.rayCastClosest(player.view.pos, ray);
-			if (arb) {
-				const coll = scene.colliders.identify(arb);
-				if (coll === this.butan.collider) {
-					scene.transforms.translate(this.butan.transform, [0, -.04, 0]);
+		// look at / interact with objects
+		const ray = vec3.sub([], player.view.focusPos, player.view.pos);
+		vec3.scaleAndAdd(ray, player.view.pos, ray, 1); // meters of reach for look/interact
+		const arb = scene.physicsWorld.rayCastClosest(player.view.pos, ray);
+		const prevFocus = this.inFocus;
+		if (arb) {
+			const ent = scene.colliders.identifyEntity(arb);
+			if (control.keyboard.pressed(control.Key.E)) {
+				for (let i = 0; i < this.ux.length; ++i) {
+					if (this.ux[i].interact(ent)) {
+						break;
+					}
+				}
+			}
+			else {
+				if (this.inFocus !== ent) {
+					for (let i = 0; i < this.ux.length; ++i) {
+						if (this.ux[i].hover(ent)) {
+							break;
+						}
+					}
+				}
+			}
+			this.inFocus = ent;
+		}
+		else {
+			this.inFocus = 0;
+		}
+		if (prevFocus && prevFocus !== this.inFocus) {
+			for (let i = 0; i < this.ux.length; ++i) {
+				if (this.ux[i].blur(prevFocus)) {
+					break;
 				}
 			}
 		}
