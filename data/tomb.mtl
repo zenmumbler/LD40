@@ -8,7 +8,7 @@ newmtl Blacktop_Old_01
 map_Kd textures/Blacktop_Old_01.jpg
 
 newmtl Brick_Rough_Tan
-map_Kd textures/Brick_Rough_Tan.jpg
+map_Kd -s .5 .5 textures/Brick_Rough_Tan.jpg
 
 newmtl Granite_Brown
 map_Kd textures/Granite_Brown.jpg
