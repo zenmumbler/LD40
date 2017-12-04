@@ -33,6 +33,58 @@ class Mensajes {
 	} 
 }
 
+
+class BFD implements Interactable {
+	open = false;
+	info: EntityInfo;
+
+	hover(_ent: entity.Entity) {
+		return false;
+	}
+
+	blur(_ent: entity.Entity) {
+		return false;
+	}
+
+	interact(ent: entity.Entity) {
+		if (!this.open && ent === this.info.entity) {
+			this.gameState.showMessage("I sense great power beyond here\nand, something else...");
+		}
+		return false;
+	}
+
+	gameStateChanged(gs: GameState) {
+		if (this.open) {
+			return;
+		}
+		if (gs.didSolveGrid && gs.didSolveSlide) {
+			this.open = true;
+			// play distant rumble of opening
+			this.scene.transforms.setPosition(this.info.transform, [0, 3.6, 32.18]);
+			this.scene.colliders.destroy(this.info.collider);
+		}
+	}
+
+	constructor(public gameState: GameState, public scene: sd.Scene, public cache: asset.CacheAccess, public sound: Sound) {
+		gameState.listen(this);
+
+		this.info = makeEntity(scene, {
+			transform: {
+				position: [0, 1.3, 32.18]
+			},
+			geom: geometry.gen.generate(new geometry.gen.Box({ width: 2.5, height: 2.6, depth: 0.16 })),
+			renderer: {
+				materials: [makePBRMat(scene, cache("material", "Blacktop_New"))]
+			},
+			rigidBody: {
+				mass: 0,
+				shape: physics.makeShape({ type: physics.PhysicsShapeType.Box, halfExtents: [1.25, 1.3, .08] })!
+			}
+		});
+	}
+}
+
+
 class MainScene implements sd.SceneDelegate {
 	scene: sd.Scene;
 	gameState: GameState;
@@ -55,7 +107,6 @@ class MainScene implements sd.SceneDelegate {
 	}
 
 	gameStateChanged(_gs: GameState) {
-
 	}
 
 	setup() {
@@ -106,6 +157,7 @@ class MainScene implements sd.SceneDelegate {
 		this.ux.push(new Artifact("A", this.gameState, scene, cache, this.sound));
 		this.ux.push(new Artifact("B", this.gameState, scene, cache, this.sound));
 		this.ux.push(new Artifact("C", this.gameState, scene, cache, this.sound));
+		this.ux.push(new BFD(this.gameState, scene, cache, this.sound));
 
 		for (const ia of this.ux) {
 			if (isUpdateable(ia)) {
