@@ -12,6 +12,7 @@ import container = sd.container;
 import audio = sd.audio;
 import physics = sd.physics;
 import control = sd.control;
+import effect = render.effect;
 
 const { vec2, vec3, vec4, quat, mat3, mat4 } = veclib;
 
