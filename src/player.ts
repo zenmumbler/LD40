@@ -40,9 +40,9 @@ class PlayerView {
 			},
 			light: {
 				type: entity.LightType.Point,
-				colour: [1, 1, 1],
-				range: 15,
-				intensity: .8
+				colour: srgb8Color(255, 236, 200),
+				range: 8,
+				intensity: .45
 			}
 		});
 
