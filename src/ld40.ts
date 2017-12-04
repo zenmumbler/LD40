@@ -9,6 +9,8 @@
 /// <reference path="./gridpillar.ts" />
 /// <reference path="./slidepillar.ts" />
 /// <reference path="./artifact.ts" />
+/// <reference path="./atmospheric.ts" />
+
 
 class Mensajes {
 	timer = 0;
@@ -38,7 +40,11 @@ class BFD implements Interactable {
 	open = false;
 	info: EntityInfo;
 
-	hover(_ent: entity.Entity) {
+	hover(ent: entity.Entity) {
+		if (!this.open && ent === this.info.entity) {
+			this.gameState.showMessage("I sense great power beyond here\nand, something else...");
+			return true;
+		}
 		return false;
 	}
 
@@ -49,6 +55,7 @@ class BFD implements Interactable {
 	interact(ent: entity.Entity) {
 		if (!this.open && ent === this.info.entity) {
 			this.gameState.showMessage("I sense great power beyond here\nand, something else...");
+			return true;
 		}
 		return false;
 	}
@@ -158,6 +165,12 @@ class MainScene implements sd.SceneDelegate {
 		this.ux.push(new Artifact("B", this.gameState, scene, cache, this.sound));
 		this.ux.push(new Artifact("C", this.gameState, scene, cache, this.sound));
 		this.ux.push(new BFD(this.gameState, scene, cache, this.sound));
+		this.ux.push(new NoWayOut(this.gameState, scene, cache, this.sound));
+		this.ux.push(new InfoSphere(this.gameState, scene, cache, [26, 0, 17.2], `"The well of despair"\nI can't see or hear anything in it.`));
+		this.ux.push(new InfoSphere(this.gameState, scene, cache, [-26, 0, 17.2], `"The pit of decay"\nLooking into it is making me dizzy.`));
+		this.ux.push(new HintBox(this.gameState, scene, cache, "grid"));
+		this.ux.push(new HintBox(this.gameState, scene, cache, "ring"));
+		this.ux.push(new HintBox(this.gameState, scene, cache, "num"));
 
 		for (const ia of this.ux) {
 			if (isUpdateable(ia)) {
@@ -179,7 +192,7 @@ class MainScene implements sd.SceneDelegate {
 
 		// look at / interact with objects
 		const ray = vec3.sub([], player.view.focusPos, player.view.pos);
-		vec3.scaleAndAdd(ray, player.view.pos, ray, 1); // meters of reach for look/interact
+		vec3.scaleAndAdd(ray, player.view.pos, ray, 1.5); // meters of reach for look/interact
 		const arb = scene.physicsWorld.rayCastClosest(player.view.pos, ray);
 		const prevFocus = this.inFocus;
 		if (arb) {
