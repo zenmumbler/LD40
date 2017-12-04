@@ -34,7 +34,9 @@ class PlayerView {
 				mass: this.MASS,
 				shape: this.shape_,
 				rotationConstraints: [true, false, true],
-				isScripted: true
+				isScripted: true,
+				friction: 1,
+				// linearDrag: 1
 			},
 			light: {
 				type: entity.LightType.Point,
@@ -80,7 +82,7 @@ class PlayerView {
 		vec3.scaleAndAdd(this.velocity_, this.velocity_, rightXZ, sideAccel * timeStep);
 
 		vec3.scale(this.velocity_, this.velocity_, 0.85);
-		if (vec3.length(this.velocity_) < 0.001) {
+		if (vec3.length(this.velocity_) < 0.01) {
 			vec3.set(this.velocity_, 0, 0, 0);
 		}
 
