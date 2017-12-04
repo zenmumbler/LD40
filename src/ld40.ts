@@ -6,6 +6,9 @@
 /// <reference path="./entities.ts" />
 /// <reference path="./player.ts" />
 /// <reference path="./gamestate.ts" />
+/// <reference path="./gridpillar.ts" />
+/// <reference path="./slidepillar.ts" />
+/// <reference path="./artifact.ts" />
 
 class Mensajes {
 	timer = 0;
@@ -95,10 +98,11 @@ class MainScene implements sd.SceneDelegate {
 		});
 
 		// ----- PLAYER
-		this.player = new PlayerController(dom.$1("canvas"), [-26, 4.1, 32], scene, this.sound);
+		this.player = new PlayerController(dom.$1("canvas"), [26, 4.1, 32], scene, this.sound);
 
 		// ----- Interactables
 		this.ux.push(new GridPillar(this.gameState, scene, cache, this.sound));
+		this.ux.push(new SlidePillar(this.gameState, scene, cache, this.sound));
 		this.ux.push(new Artifact("A", this.gameState, scene, cache, this.sound));
 		this.ux.push(new Artifact("B", this.gameState, scene, cache, this.sound));
 		this.ux.push(new Artifact("C", this.gameState, scene, cache, this.sound));
