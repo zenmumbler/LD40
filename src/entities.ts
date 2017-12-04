@@ -88,3 +88,11 @@ interface Interactable {
 	blur(ent: entity.Entity): boolean;
 	interact(ent: entity.Entity): boolean;
 }
+
+interface Updateable {
+	update(dt: number): void;
+}
+
+function isUpdateable(u: any): u is Updateable {
+	return ("update" in u) && typeof u.update === "function";
+}
