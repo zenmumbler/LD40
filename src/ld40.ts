@@ -24,7 +24,7 @@ class Mensajes {
 		this.msg = gs.message;
 
 		if (this.msg.length) {
-			dom.$1("p", this.elem).textContent = gs.message.replace(/\n/g, "<br>");
+			dom.$1("p", this.elem).innerHTML = gs.message.replace(/\n/g, "<br>");
 			this.elem.style.display = "block";
 		}
 		else {
