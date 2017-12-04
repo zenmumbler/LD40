@@ -72,8 +72,8 @@ class Artifact implements Interactable, Updateable {
 		else /* C */ {
 			if (gs.didSolveGrid && gs.didSolveSlide) {
 				willActivate = true;
-				this.baseY = -3.9;
-				position = [0, this.baseY, 49.85];
+				this.baseY = -4.8;
+				position = [0, this.baseY, 49.59];
 			}
 		}
 
