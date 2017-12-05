@@ -61,7 +61,8 @@ class PlayerView {
 		this.rot_ = quat.fromEuler(0, this.angleY_, this.angleX_);
 		vec3.transformQuat(this.dir_, [0, 0, 1], this.rot_);
 		vec3.normalize(this.dir_, this.dir_);
-		vec3.transformQuat(this.up_, [0, 1, 0], this.rot_);
+		const tiltedUp = vec3.rotateZ([], [0, 1, 0], [0, 0, 0], this.tilt);
+		vec3.transformQuat(this.up_, tiltedUp, this.rot_);
 		vec3.normalize(this.up_, this.up_);
 	}
 
@@ -75,6 +76,7 @@ class PlayerView {
 	}
 
 	update(timeStep: number, acceleration: number, sideAccel: number) {
+		this.rotate([0, 0]);
 		const fwdXZ = vec3.normalize([], [this.dir_[0], 0, this.dir_[2]]);
 		const rightXZ = vec3.cross([], fwdXZ, [0, 1, 0]);
 
@@ -103,6 +105,8 @@ class PlayerView {
 	get moving() { return this.rigidBody_.getLinearVelocity().length() > 1; }
 	get focusPos() { return vec3.add([], this.pos, this.dir_); }
 	get up() { return this.up_; }
+
+	public tilt = 0;
 }
 
 

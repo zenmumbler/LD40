@@ -187,6 +187,7 @@ class MainScene implements sd.SceneDelegate {
 	update(timeStep: number) {
 		const scene = this.scene;
 		const player = this.player;
+		player.view.tilt = this.gameState.cameraTilt;
 		player.step(timeStep);
 		this.scene.camera.lookAt(player.view.pos, player.view.focusPos, player.view.up);
 
@@ -230,6 +231,7 @@ class MainScene implements sd.SceneDelegate {
 		for (const ua of this.framers) {
 			ua.update(timeStep);
 		}
+
 	}
 }
 

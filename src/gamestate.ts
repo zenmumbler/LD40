@@ -46,6 +46,7 @@ class GameState {
 	private hasArtifactC_ = false;
 	private message_ = "";
 	private messageEndTimer_ = 0;
+	private camTilt_ = new SmoothNum(0);
 
 	private listeners_: GameStateListener[] = [];
 
@@ -74,6 +75,8 @@ class GameState {
 			case "B": this.hasArtifactB_ = true; break;
 			case "C": this.hasArtifactC_ = true; break;
 		}
+		const count = this.artifactCount;
+		this.camTilt_.value = math.deg2rad(count * 4);
 		this.signal();
 	}
 	get hasArtifactA() { return this.hasArtifactA_; }
@@ -82,6 +85,8 @@ class GameState {
 	get artifactCount() {
 		return [this.hasArtifactA_, this.hasArtifactB_, this.hasArtifactC_].filter(v => v).length;
 	}
+
+	get cameraTilt() { return this.camTilt_.value; }
 
 	showMessage(m: string) {
 		this.message_ = m;
