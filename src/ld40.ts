@@ -100,6 +100,7 @@ class MainScene implements sd.SceneDelegate {
 	msg: Mensajes;
 	ux: Interactable[] = [];
 	framers: Updateable[] = [];
+	end = false;
 
 	willLoadAssets() {
 		dom.show(".overlay.loading");
@@ -113,7 +114,23 @@ class MainScene implements sd.SceneDelegate {
 		dom.hide(".overlay.loading");
 	}
 
-	gameStateChanged(_gs: GameState) {
+	gameStateChanged(gs: GameState) {
+		if (this.end) {
+			return;
+		}
+		if (gs.ending) {
+			this.end = true;
+			this.scene.renderers.all().forEach(rr => {
+				this.scene.renderers.setEnabled(rr, false);
+			});
+			// music thingy
+			setTimeout(() => {
+				this.gameState.showMessage("As I drag myself out of the temple I feel the destructive power\nof the orbs fading away. They were now just stones. All for nothing...\n\nUnless, ... I go back.");
+			}, 1500);
+			setTimeout(() => {
+				this.gameState.showMessage("The End");
+			}, 14000);
+		}
 	}
 
 	setup() {
@@ -156,7 +173,7 @@ class MainScene implements sd.SceneDelegate {
 		});
 
 		// ----- PLAYER
-		this.player = new PlayerController(dom.$1("canvas"), [0, 1.1, 28], scene, this.sound);
+		this.player = new PlayerController(dom.$1("canvas"), [0, 1.1, 3], scene, this.sound);
 		this.gameState.listen(this.player);
 
 		// ----- Interactables
@@ -181,6 +198,21 @@ class MainScene implements sd.SceneDelegate {
 		
 		// ----- finish up
 		allocGeoms(scene);
+
+		dom.show("div.titles");
+	}
+
+	begin() {
+		dom.hide("div.titles");
+		this.player.go();
+
+		setTimeout(() => {
+			this.gameState.showMessage("After many years, I have found this forsaken place.\nThe orbs lie within, I... will seize their power!");
+		}, 1500);
+
+		setTimeout(() => {
+			this.gameState.showMessage("WASD to move, E to interact");
+		}, 5000);
 	}
 
 	private inFocus: entity.Entity = 0;

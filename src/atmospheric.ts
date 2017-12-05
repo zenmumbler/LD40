@@ -1,9 +1,15 @@
 class NoWayOut implements Interactable {
 	info: EntityInfo;
+	open = false;
 
 	hover(ent: entity.Entity) {
 		if (ent === this.info.entity) {
-			this.gameState.showMessage("I cannot leave, not when I am this close.");
+			if (this.open) {
+				this.gameState.setEnd();
+			}
+			else {
+				this.gameState.showMessage("I cannot leave, not when I am this close.");
+			}
 			return true;
 		}
 		return false;
@@ -21,7 +27,18 @@ class NoWayOut implements Interactable {
 		return false;
 	}
 
+	gameStateChanged(gs: GameState) {
+		if (this.open) {
+			return;
+		}
+		if (gs.artifactCount === 3) {
+			this.open = true;
+		}
+	}
+
 	constructor(public gameState: GameState, public scene: sd.Scene, public cache: asset.CacheAccess, public sound: Sound) {
+		gameState.listen(this);
+
 		this.info = makeEntity(scene, {
 			transform: {
 				position: [0, 1.3, -5]

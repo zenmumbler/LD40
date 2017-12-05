@@ -47,6 +47,7 @@ class GameState {
 	private message_ = "";
 	private messageEndTimer_ = 0;
 	private camTilt_ = new SmoothNum(0);
+	private ending_ = false;
 
 	private listeners_: GameStateListener[] = [];
 
@@ -94,11 +95,16 @@ class GameState {
 		if (this.messageEndTimer_) {
 			clearTimeout(this.messageEndTimer_);
 		}
-		this.messageEndTimer_ = setTimeout(() => {
-			this.message_ = "";
-			this.signal();
-		}, duration);
+		if (m !== "The End") {
+			this.messageEndTimer_ = setTimeout(() => {
+				this.message_ = "";
+				this.signal();
+			}, duration);
+		}
 		this.signal();
 	}
 	get message() { return this.message_; }
+
+	setEnd() { this.ending_ = true; this.signal(); }
+	get ending() { return this.ending_; }
 }

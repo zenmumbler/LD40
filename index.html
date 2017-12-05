@@ -54,7 +54,7 @@
 		}
 
 		.titles {
-			background-color: white;
+			background-color: rgba(0, 0, 0, .5);
 		}
 
 		.titles img {
@@ -65,12 +65,30 @@
 			transition: opacity 2s ease-in;
 		}
 
-		.titles p {
+		.titles h1 {
+			color: white;
+			font-family: inherit;
+			font-size: 48;
+			font-weight: normal;
 			position: absolute;
-			top: 340px;
+			top: 200px;
 			width: 100%;
 			text-align: center;
 		}
+
+		.titles p.info {
+			position: absolute;
+			top: 320px;
+			width: 100%;
+			text-align: center;
+		}
+		.titles p.hajime {
+			position: absolute;
+			top: 400px;
+			width: 100%;
+			text-align: center;
+		}
+
 
 		p.thx {
 			top: 400px;
@@ -203,6 +221,13 @@
 			<div class="bar">
 				<div class="progress"></div>
 			</div>
+		</div>
+		<div class="overlay titles">
+			<h1>Disintegrate</h1>
+			<p class="info">for Ludum Dare 40 by Arthur Langereis — @zenmumbler</p>
+			<p class="hajime">
+				<button class="butan begin" onclick="sd.App.scene.delegate.begin()">Enter the Tomb</button>
+			</p>
 		</div>
 		<div class="overlay messages">
 			<p></p>

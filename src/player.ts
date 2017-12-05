@@ -144,6 +144,7 @@ class PlayerController {
 	private baseSpeed_ = 70;
 	private speedVariance_ = 0;
 	private stepVariance_ = 0;
+	private stop_ = true;
 
 	constructor(sensingElem: HTMLElement, initialPos: sd.Float3, scene: sd.Scene, private sfx: Sound) {
 		this.view = new PlayerView(initialPos, scene);
@@ -160,6 +161,9 @@ class PlayerController {
 		});
 
 		dom.on(window, "mousemove", (evt: MouseEvent) => {
+			if (this.stop_) {
+				return;
+			}
 			if ((document.pointerLockElement === null) && (!this.tracking_)) {
 				return;
 			}
@@ -248,13 +252,32 @@ class PlayerController {
 	}
 
 	gameStateChanged(gs: GameState) {
-		const count = gs.artifactCount;
-		this.speedVariance_ = 8 * count;
-		this.baseSpeed_ = 70 - 10 * count;
-		this.stepVariance_ = 70 * count;
+		if (this.stop_) {
+			return;
+		}
+		if (gs.ending) {
+			this.stop_ = true;
+			this.stopSteps();
+			this.releaseMouse();
+		}
+		else {
+			const count = gs.artifactCount;
+			this.speedVariance_ = 8 * count;
+			this.baseSpeed_ = 70 - 10 * count;
+			this.stepVariance_ = 70 * count;
+		}
+	}
+
+	go() {
+		this.stop_ = false;
+		this.tryCaptureMouse();
 	}
 
 	step(timeStep: number) {
+		if (this.stop_) {
+			return;
+		}
+
 		const st = Math.sin(sd.App.globalTime * 4);
 		const maxAccel = this.baseSpeed_ + this.speedVariance_ * st;
 		let accel = 0, sideAccel = 0;
