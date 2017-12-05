@@ -26,7 +26,7 @@ newmtl Wax_01
 map_Kd -s .46 .46 -o .05 .15 textures/numeralpath.png
 
 newmtl Wax_02
-map_Kd -s .5 .5 -o -.05 -.1 textures/gridmarkers.png
+map_Kd -s .5 .5 -o -.38 -.78 textures/gridmarkers.png
 
 newmtl material
 Kd 1.000000 1.000000 1.000000
