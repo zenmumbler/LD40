@@ -8,16 +8,19 @@ newmtl Blacktop_Old_01
 map_Kd textures/Blacktop_Old_01.jpg
 
 newmtl Brick_Rough_Tan
-map_Kd -s .5 .5 textures/Brick_Rough_Tan.jpg
+map_Kd -s .5 .5 textures/wall-b.jpg
 
 newmtl Granite_Brown
-map_Kd textures/Granite_Brown.jpg
+map_Kd -s .5 .5 textures/TexturesCom_CobblestoneFloor6_albedo_M.jpg
 
 newmtl Granite_Dark_Gray
 map_Kd textures/Granite_Dark_Gray.jpg
 
 newmtl Metal_Silver
-map_Kd textures/Metal_Silver.jpg
+Kd 0.8313 0.6863 0.2157
+map_Kd -s .5 .5 textures/Metal_Silver.jpg
+Ks .92 .9 .85
+Ns 24
 
 newmtl Resin_Blue
 map_Kd -s .46 .46 -o -.1 -.32 textures/numerals.png
