@@ -1,3 +1,41 @@
+class SmoothNum {
+	private v_: number;
+	private target_: number;
+	private t0: number;
+	private t1: number;
+
+	constructor(init = 0) {
+		this.v_ = this.target_ = init;
+		this.t0 = this.t1 = 0;
+	}
+
+	set value(nv: number) {
+		if (nv !== this.target_) {
+			this.v_ = this.value;
+			this.target_ = nv;
+			this.t0 = Date.now();
+			this.t1 = this.t0 + 3000;
+		}
+	}
+
+	get value() {
+		let t = Date.now();
+		if (t <= this.t0) {
+			return this.v_;
+		}
+		if (t >= this.t1) {
+			return this.target_;
+		}
+		let d = this.t1 - this.t0;
+		const dv = this.target_ - this.v_;
+		t -= this.t0;
+		t /= d;
+		t = t * t;
+		return this.v_ + dv * t;
+	}
+}
+
+
 type GameStateListener = ((gs: GameState) => any) | { gameStateChanged(gs: GameState): any; };
 
 class GameState {
