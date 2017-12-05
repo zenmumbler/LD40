@@ -11,7 +11,21 @@ class Artifact implements Interactable, Updateable {
 		radius: .2,
 	})!;
 
-	hover(_ent: entity.Entity) {
+	hover(ent: entity.Entity) {
+		if (this.info) {
+			if (ent === this.info.entity) {
+				const count = this.gameState.artifactCount;
+				if (count === 0) {
+					this.gameState.showMessage("I gaze upon the orb. It is calling for me. I can feel its power...");
+				}
+				else if (count === 1) {
+					this.gameState.showMessage("The second orb, I can only imagine the power it will give me..");
+				}
+				else {
+					this.gameState.showMessage("The final orb! I! I will become ...immortal!");
+				}
+			}
+		}
 		return false;
 	}
 
@@ -31,7 +45,16 @@ class Artifact implements Interactable, Updateable {
 				this.scene.renderers.setEnabled(this.info.renderer, false);
 				this.info = undefined;
 				this.gameState.pickup(this.which);
-				this.gameState.showMessage("It is mine!!!");
+				const count = this.gameState.artifactCount;
+				if (count === 1) {
+					this.gameState.showMessage("As I grab the orb I can feel a power growing inside me.\nI feel a bit strange, but that was to be expected.");
+				}
+				else if (count === 2) {
+					this.gameState.showMessage("The orb engulfs me as I stagger to contain its immense power.\nMy limbs are cramping up but I have to continue!");
+				}
+				else {
+					this.gameState.showMessage("I've done it! I'm... I feel like... like I'm being ripped apart!!\nI must get out. Out! OUT!!");
+				}
 				return true;
 			}
 		}
