@@ -9,6 +9,7 @@ class PlayerView {
 	private shape_: physics.PhysicsShape;
 	private transform_: entity.TransformInstance;
 	private collider_: entity.ColliderInstance;
+	private light_: entity.LightInstance;
 	private rigidBody_: Ammo.btRigidBody;
 	private tempBV3_: Ammo.btVector3;
 	private tempTX_: Ammo.btTransform;
@@ -133,6 +134,9 @@ class PlayerController {
 	private tracking_ = false;
 	private lastPos_ = [0, 0];
 	private shakeOffset_ = [0, 0];
+	private baseSpeed_ = 70;
+	private speedVariance_ = 0;
+	// private stepVariance_ = 0;
 
 	constructor(sensingElem: HTMLElement, initialPos: sd.Float3, scene: sd.Scene, private sfx: Sound) {
 		this.view = new PlayerView(initialPos, scene);
@@ -210,6 +214,7 @@ class PlayerController {
 	handleStepSounds() {
 		if (this.view.moving) {
 			if (this.stepSoundTimer_ === -1) {
+
 				this.stepSoundTimer_ = setInterval(() => { this.sfx.play(SFX.FootStep); }, 500);
 			}
 		}
@@ -231,8 +236,16 @@ class PlayerController {
 		return this.shakeOffset_;
 	}
 
+	gameStateChanged(gs: GameState) {
+		const count = gs.artifactCount;
+		this.speedVariance_ = 8 * count;
+		this.baseSpeed_ = 70 - 10 * count;
+		// this.stepVariance_ = 70 * count;
+	}
+
 	step(timeStep: number) {
-		const maxAccel = 45;
+		const st = Math.sin(sd.App.globalTime * 4);
+		const maxAccel = this.baseSpeed_ + this.speedVariance_ * st;
 		let accel = 0, sideAccel = 0;
 
 		if (control.keyboard.down(control.Key.UP) || control.keyboard.down(this.keyForKeyCommand(KeyCommand.Forward))) {

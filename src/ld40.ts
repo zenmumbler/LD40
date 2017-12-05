@@ -156,7 +156,8 @@ class MainScene implements sd.SceneDelegate {
 		});
 
 		// ----- PLAYER
-		this.player = new PlayerController(dom.$1("canvas"), [26, 4.1, 32], scene, this.sound);
+		this.player = new PlayerController(dom.$1("canvas"), [0, 1.1, 28], scene, this.sound);
+		this.gameState.listen(this.player);
 
 		// ----- Interactables
 		this.ux.push(new GridPillar(this.gameState, scene, cache, this.sound));
