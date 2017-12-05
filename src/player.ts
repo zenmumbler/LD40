@@ -42,8 +42,8 @@ class PlayerView {
 			light: {
 				type: entity.LightType.Point,
 				colour: srgb8Color(255, 236, 200),
-				range: 7.5,
-				intensity: .45
+				range: 8.5,
+				intensity: .6
 			}
 		});
 
@@ -101,8 +101,8 @@ class PlayerView {
 		// ---
 
 		const lt = Math.sin(sd.App.globalTime * 6.28);
-		this.scene.lights.setIntensity(this.light_, .45 + .03 * lt);
-		this.scene.lights.setRange(this.light_, 7.5 + .15 * lt);
+		this.scene.lights.setIntensity(this.light_, .6 + .03 * lt);
+		this.scene.lights.setRange(this.light_, 8.5 + .15 * lt);
 	}
 
 	get rigidBody() { return this.rigidBody_; }
