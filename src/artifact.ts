@@ -79,13 +79,17 @@ class Artifact implements Interactable, Updateable {
 
 		if (willActivate) {
 			this.activated = true;
+
+			const mat = makePBRMat(this.scene, this.cache("material", "Orb")) as effect.StandardEffectData;
+			mat.emissiveFactor[3] = .1;
+
 			this.info = makeEntity(this.scene, {
 				transform: {
 					position
 				},
 				geom: this.sphere,
 				renderer: {
-					materials: [makePBRMat(this.scene, this.cache("material", "Metal_Silver"))]
+					materials: [mat]
 				},
 				rigidBody: {
 					mass: 0,

@@ -38,3 +38,8 @@ Ke 0.000000 0.000000 0.000000
 newmtl material_5
 Kd 0.996078 0.996078 0.996078
 Ke 1.000000 1.000000 1.000000
+
+newmtl Orb
+Kd 0.02 0.002 0.04
+map_Kd -s .5 .5 textures/Metal_Silver.jpg
+Ke 0.1352 0 0.2607
