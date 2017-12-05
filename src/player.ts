@@ -143,7 +143,7 @@ class PlayerController {
 	private shakeOffset_ = [0, 0];
 	private baseSpeed_ = 70;
 	private speedVariance_ = 0;
-	// private stepVariance_ = 0;
+	private stepVariance_ = 0;
 
 	constructor(sensingElem: HTMLElement, initialPos: sd.Float3, scene: sd.Scene, private sfx: Sound) {
 		this.view = new PlayerView(initialPos, scene);
@@ -221,8 +221,12 @@ class PlayerController {
 	handleStepSounds() {
 		if (this.view.moving) {
 			if (this.stepSoundTimer_ === -1) {
-
-				this.stepSoundTimer_ = setInterval(() => { this.sfx.play(SFX.FootStep); }, 500);
+				const st = Math.sin(sd.App.globalTime * 4);
+				this.stepSoundTimer_ = setTimeout(() => {
+					this.stepSoundTimer_ = -1;
+					this.sfx.play(SFX.FootStep);
+				}, 500 + this.stepVariance_ * st);
+				// this.stepSoundTimer_ = setInterval(() => { this.sfx.play(SFX.FootStep); }, 500);
 			}
 		}
 		else {
@@ -247,7 +251,7 @@ class PlayerController {
 		const count = gs.artifactCount;
 		this.speedVariance_ = 8 * count;
 		this.baseSpeed_ = 70 - 10 * count;
-		// this.stepVariance_ = 70 * count;
+		this.stepVariance_ = 70 * count;
 	}
 
 	step(timeStep: number) {
