@@ -114,6 +114,21 @@ class MainScene implements sd.SceneDelegate {
 		dom.hide(".overlay.loading");
 	}
 
+	keyboardStuff() {
+		dom.on(dom.$(`input[type="radio"][name="keymap"]`), "click", evt => {
+			const radio = evt.target as HTMLInputElement;
+			if (radio.checked) {
+				const km = radio.dataset.km;
+				if (km === "qwerty") {
+					this.player.keyboardType = KeyboardType.QWERTY;
+				}
+				else {
+					this.player.keyboardType = KeyboardType.AZERTY;
+				}
+			}
+		});
+	}
+
 	gameStateChanged(gs: GameState) {
 		if (this.end) {
 			return;
@@ -205,6 +220,7 @@ class MainScene implements sd.SceneDelegate {
 		allocGeoms(scene);
 
 		dom.show("div.titles");
+		this.keyboardStuff();
 		this.sound.startMusic(false);
 	}
 
