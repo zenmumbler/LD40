@@ -42,7 +42,7 @@ class PlayerView {
 			light: {
 				type: entity.LightType.Point,
 				colour: srgb8Color(255, 236, 200),
-				range: 8,
+				range: 7.5,
 				intensity: .45
 			}
 		});
@@ -50,6 +50,7 @@ class PlayerView {
 		this.transform_ = ei.transform;
 		this.collider_ = ei.collider;
 		this.rigidBody_ = scene.colliders.rigidBody(this.collider_);
+		this.light_ = ei.light;
 
 		this.tempBV3_ = new Ammo.btVector3();
 		this.tempTX_ = new Ammo.btTransform();
@@ -96,6 +97,12 @@ class PlayerView {
 		const lv = this.rigidBody_.getLinearVelocity();
 		this.tempBV3_.setValue(this.velocity_[0], lv.y(), this.velocity_[2]);
 		this.rigidBody_.setLinearVelocity(this.tempBV3_);
+
+		// ---
+
+		const lt = Math.sin(sd.App.globalTime * 6.28);
+		this.scene.lights.setIntensity(this.light_, .45 + .03 * lt);
+		this.scene.lights.setRange(this.light_, 7.5 + .15 * lt);
 	}
 
 	get rigidBody() { return this.rigidBody_; }
