@@ -120,6 +120,7 @@ class MainScene implements sd.SceneDelegate {
 		}
 		if (gs.ending) {
 			this.end = true;
+			this.sound.stopMusic();
 			this.scene.renderers.all().forEach(rr => {
 				this.scene.renderers.setEnabled(rr, false);
 			});
@@ -148,7 +149,11 @@ class MainScene implements sd.SceneDelegate {
 				cache("audio", "step0"),
 				cache("audio", "step1")
 			],
-			// music: undefined
+			music: cache("audio", "music"),
+			end: cache("audio", "endMusic"),
+			orb: cache("audio", "orb"),
+			power: cache("audio", "power"),
+			click: cache("audio", "click")
 		});
 
 		scene.camera.perspective(60, 0.1, 100);
@@ -200,6 +205,7 @@ class MainScene implements sd.SceneDelegate {
 		allocGeoms(scene);
 
 		dom.show("div.titles");
+		this.sound.startMusic(false);
 	}
 
 	begin() {
@@ -211,8 +217,9 @@ class MainScene implements sd.SceneDelegate {
 		}, 1500);
 
 		setTimeout(() => {
-			this.gameState.showMessage("WASD to move, E to interact");
-		}, 5000);
+			const wasd = this.player.keyboardType === KeyboardType.QWERTY ? "WASD" : "ZQSD";
+			this.gameState.showMessage(`${wasd} to move, E to interact`);
+		}, 7500);
 	}
 
 	private inFocus: entity.Entity = 0;
@@ -273,20 +280,6 @@ sd.App.messages.listenOnce("AppStart", undefined, () => {
 	const stageHolder = dom.$1(".stageholder");
 	const rw = new render.RenderWorld(stageHolder, 1280, 720);
 	const adev = audio.makeAudioDevice()!;
-
-	const rdgl1 = rw.rd as render.gl1.GL1RenderDevice;
-	if (!(rdgl1.extDerivatives && rdgl1.extFragmentLOD)) {
-		alert("Sorry, this game is not compatible with this browser.\n\nTry one of the following:\n- Firefox 50 or newer\n- Safari 9 or newer\n- Chrome 40 or newer\n\nApologies for the trouble.");
-		return;
-	}
-	if (!document.body.requestPointerLock) {
-		dom.hide("#fullscreen");
-	}
-	if (screen.width < 1920 || screen.height < 1080) {
-		dom.disable("#vps-fullhd");
-		dom.$1("#vps-fullhd").title = "Your display does not support this resolution.";
-		dom.$1("#vps-fullhd+label").title = "Your display does not support this resolution.";
-	}
 
 	io.loadFile("data/assets-ld40.json", { tryBreakCache: true, responseType: io.FileLoadType.JSON })
 		.then((assetsJSON: any) => {

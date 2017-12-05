@@ -60,6 +60,7 @@ class GridPillar implements Interactable {
 				this.gameState.showMessage("The switches are stuck in place.");
 			}
 			else {
+				this.sound.play(SFX.Click);
 				butan.pressed = !butan.pressed;
 				const pos = this.scene.transforms.localPosition(butan.comp.transform);
 				this.scene.transforms.setPosition(butan.comp.transform, [pos[0], butan.pressed ? 0.04 : 0.07, pos[2]]);

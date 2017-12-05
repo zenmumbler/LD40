@@ -1,6 +1,9 @@
 const enum SFX {
 	FootStep,
 	DoorOpen,
+	Orb,
+	Power,
+	Click
 }
 
 const enum Music {
@@ -10,8 +13,11 @@ const enum Music {
 
 interface SoundAssets {
 	steps: AudioBuffer[];
-	// music: AudioBuffer;
-	// doorOpen: AudioBuffer;
+	music: AudioBuffer;
+	end: AudioBuffer;
+	orb: AudioBuffer;
+	power: AudioBuffer;
+	click: AudioBuffer;
 }
 
 class Sound {
@@ -42,13 +48,13 @@ class Sound {
 	}
 
 
-	startMusic() {
+	startMusic(end: boolean) {
 		if (!this.musicSource) {
 			this.musicSource = this.ad.ctx.createBufferSource();
-			// this.musicSource.buffer = this.assets_.music;
+			this.musicSource.buffer = end ? this.assets_.end : this.assets_.music;
 			this.musicSource.loop = true;
 			this.musicSource.connect(this.musicGain);
-			this.musicGain.gain.value = 0; // 0.60;
+			this.musicGain.gain.value = 0.60;
 
 			this.musicSource.start(0);
 		}
@@ -75,7 +81,9 @@ class Sound {
 
 		switch (what) {
 			case SFX.FootStep: buffer = assets.steps[this.stepToggle]; source = this.stepSource; gain = this.stepGain; volume = 1; rate = 1; this.stepToggle ^= 1; break;
-			// case SFX.DoorOpen: buffer = assets.doorOpen; source = this.effectSource; gain = this.effectGain; volume = 1.5; rate = 1.0; break;
+			case SFX.Orb: buffer = assets.orb; source = this.effectSource; gain = this.effectGain; volume = 1.0; rate = 1.0; break;
+			case SFX.Power: buffer = assets.power; source = this.effectSource; gain = this.effectGain; volume = 1.5; rate = 1.0; break;
+			case SFX.Click: buffer = assets.click; source = this.effectSource; gain = this.effectGain; volume = 0.7; rate = 1.0; break;
 
 			default: buffer = null;
 		}

@@ -40,6 +40,7 @@ class Artifact implements Interactable, Updateable {
 		if (this.info) {
 			if (ent === this.info.entity) {
 				this.retrieved = true;
+				this.sound.play(SFX.Power);
 
 				this.scene.colliders.destroy(this.info.collider);
 				this.scene.renderers.setEnabled(this.info.renderer, false);
@@ -54,6 +55,8 @@ class Artifact implements Interactable, Updateable {
 				}
 				else {
 					this.gameState.showMessage("I've done it! I'm... I feel like... like I'm being ripped apart!!\nI must get out. Out! OUT!!");
+					this.sound.stopMusic();
+					this.sound.startMusic(true);
 				}
 				return true;
 			}
@@ -102,6 +105,9 @@ class Artifact implements Interactable, Updateable {
 
 		if (willActivate) {
 			this.activated = true;
+			if (this.which !== "C") {
+				this.sound.play(SFX.Orb);
+			}
 
 			const mat = makePBRMat(this.scene, this.cache("material", "Orb")) as effect.StandardEffectData;
 			mat.emissiveFactor[3] = .1;

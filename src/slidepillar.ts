@@ -33,7 +33,7 @@ class SlidePillar implements Interactable {
 				setTimeout(() => {
 					this.busy = false;
 					this.reset();
-					// play "reset"
+					this.sound.play(SFX.Click);
 				}, 350);
 			}
 		}
@@ -74,6 +74,7 @@ class SlidePillar implements Interactable {
 			}
 			else {
 				if (! butan.pressed) {
+					this.sound.play(SFX.Click);
 					butan.pressed = !butan.pressed;
 					this.sequence.push(butan.index);
 					const pos = this.scene.transforms.localPosition(butan.comp.transform);

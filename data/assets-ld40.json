@@ -7,6 +7,11 @@
 	"assets": [
 		{ "name": "tomb", "uri": "data/tomb.obj" },
 		{ "name": "step0", "uri": "data/sound/34253__ddohler__hard-walking_0.mp3" },
-		{ "name": "step1", "uri": "data/sound/34253__ddohler__hard-walking_1.mp3" }
+		{ "name": "step1", "uri": "data/sound/34253__ddohler__hard-walking_1.mp3" },
+		{ "name": "music", "uri": "data/sound/133100__klankbeeld__horror-ambience-10.mp3" },
+		{ "name": "endMusic", "uri": "data/sound/274280__ducksingel__hv-longtrainidea.mp3" },
+		{ "name": "orb", "uri": "data/sound/178346__andromadax24__s-teleport-04.mp3"},
+		{ "name": "power", "uri": "data/sound/248150__hykenfreak__deepest-boom-yet.mp3"},
+		{ "name": "click", "uri": "data/sound/335745__j1987__lightswitch.wav"}
 	]
 }
