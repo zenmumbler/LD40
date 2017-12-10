@@ -255,16 +255,16 @@ class MainScene implements sd.SceneDelegate {
 		if (arb) {
 			const ent = scene.colliders.identifyEntity(arb);
 			if (control.keyboard.pressed(control.Key.E)) {
-				for (let i = 0; i < this.ux.length; ++i) {
-					if (this.ux[i].interact(ent)) {
+				for (const ia of this.ux) {
+					if (ia.interact(ent)) {
 						break;
 					}
 				}
 			}
 			else {
 				if (this.inFocus !== ent) {
-					for (let i = 0; i < this.ux.length; ++i) {
-						if (this.ux[i].hover(ent)) {
+					for (const ia of this.ux) {
+						if (ia.hover(ent)) {
 							break;
 						}
 					}
@@ -276,8 +276,8 @@ class MainScene implements sd.SceneDelegate {
 			this.inFocus = 0;
 		}
 		if (prevFocus && prevFocus !== this.inFocus) {
-			for (let i = 0; i < this.ux.length; ++i) {
-				if (this.ux[i].blur(prevFocus)) {
+			for (const ia of this.ux) {
+				if (ia.blur(prevFocus)) {
 					break;
 				}
 			}
