@@ -249,11 +249,10 @@ class MainScene implements sd.SceneDelegate {
 
 		// look at / interact with objects
 		const ray = vec3.sub([], player.view.focusPos, player.view.pos);
-		vec3.scaleAndAdd(ray, player.view.pos, ray, 1.5); // meters of reach for look/interact
-		const arb = scene.physicsWorld.rayCastClosest(player.view.pos, ray);
+		const arb = scene.physicsWorld.rayCastClosest(player.view.pos, ray, 1.5); // meters of reach for look/interact
 		const prevFocus = this.inFocus;
 		if (arb) {
-			const ent = scene.colliders.identifyEntity(arb);
+			const ent = scene.colliders.identifyEntity(arb.collisionObject);
 			if (control.keyboard.pressed(control.Key.E)) {
 				for (const ia of this.ux) {
 					if (ia.interact(ent)) {
