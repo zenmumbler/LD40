@@ -290,19 +290,20 @@ class MainScene implements sd.SceneDelegate {
 	}
 }
 
-
-sd.App.messages.listenOnce("AppStart", undefined, () => {
-	const stageHolder = dom.$1(".stageholder");
-	const rw = new render.RenderWorld(stageHolder, 1280, 720);
-	const adev = audio.makeAudioDevice()!;
-
-	io.loadFile("data/assets-ld40.json", { tryBreakCache: true, responseType: io.FileLoadType.JSON })
+window.addEventListener("load", () => {
+	sd.App.initialize({
+		root: dom.$1(".stageholder"),
+		width: 1024,
+		height: 576,
+	}).then(() => {
+		io.loadFile("data/assets-ld40.json", { tryBreakCache: true, responseType: io.FileLoadType.JSON })
 		.then((assetsJSON: any) => {
-			const scene = new sd.Scene(rw, adev, {
+			const scene = sd.App.makeScene({
 				physicsConfig: physics.makeDefaultPhysicsConfig(),
 				assets: assetsJSON.assets,
 				delegate: new MainScene()
 			});
 			sd.App.scene = scene;
 		});
+	});
 });
