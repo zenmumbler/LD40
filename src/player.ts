@@ -138,8 +138,6 @@ class PlayerController {
 	view: PlayerView;
 	private vpWidth_: number;
 	private vpHeight_: number;
-	private tracking_ = false;
-	private lastPos_ = [0, 0];
 	private shakeOffset_ = [0, 0];
 	private baseSpeed_ = 70;
 	private speedVariance_ = 0;
@@ -152,46 +150,9 @@ class PlayerController {
 		this.vpWidth_ = sensingElem.offsetWidth;
 		this.vpHeight_ = sensingElem.offsetHeight;
 
-		// -- mouse based rotation
-		dom.on(sensingElem, "mousedown", (evt: MouseEvent) => {
-			this.tryCaptureMouse();
-
-			this.tracking_ = true;
-			this.lastPos_ = [evt.clientX, evt.clientY];
+		dom.on(sensingElem, "mousedown", () => {
+			control.mouse.lock();
 		});
-
-		dom.on(window, "mousemove", (evt: MouseEvent) => {
-			if (this.stop_) {
-				return;
-			}
-			if ((document.pointerLockElement === null) && (!this.tracking_)) {
-				return;
-			}
-			const newPos = [evt.clientX, evt.clientY];
-			const delta = document.pointerLockElement ? [evt.movementX, evt.movementY] : vec2.sub([], newPos, this.lastPos_);
-			vec2.divide(delta, delta, [-this.vpWidth_, -this.vpHeight_]);
-			vec2.scale(delta, delta, document.pointerLockElement ? .25 : 1);
-			this.lastPos_ = newPos;
-
-			this.view.rotate(delta);
-		});
-
-		dom.on(window, "mouseup", () => {
-			this.tracking_ = false;
-		});
-	}
-
-	tryCaptureMouse() {
-		const canvas = dom.$1(".stageholder");
-		if (canvas.requestPointerLock) {
-			canvas.requestPointerLock();
-		}
-	}
-
-	releaseMouse() {
-		if (document.exitPointerLock) {
-			document.exitPointerLock();
-		}
 	}
 
 	public keyboardType = KeyboardType.QWERTY;
@@ -258,7 +219,7 @@ class PlayerController {
 		if (gs.ending) {
 			this.stop_ = true;
 			this.stopSteps();
-			this.releaseMouse();
+			control.mouse.unlock();
 		}
 		else {
 			const count = gs.artifactCount;
@@ -270,13 +231,18 @@ class PlayerController {
 
 	go() {
 		this.stop_ = false;
-		this.tryCaptureMouse();
+		control.mouse.lock();
 	}
 
 	step(timeStep: number) {
 		if (this.stop_) {
 			return;
 		}
+
+		const delta = control.mouse.positionDelta;
+		vec2.divide(delta, delta, [-this.vpWidth_, -this.vpHeight_]);
+		// vec2.scale(delta, delta, .25);
+		this.view.rotate(delta);
 
 		const st = Math.sin(sd.App.globalTime * 4);
 		const maxAccel = this.baseSpeed_ + this.speedVariance_ * st;
