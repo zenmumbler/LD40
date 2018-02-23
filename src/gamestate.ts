@@ -26,7 +26,7 @@ class SmoothNum {
 		if (t >= this.t1) {
 			return this.target_;
 		}
-		let d = this.t1 - this.t0;
+		const d = this.t1 - this.t0;
 		const dv = this.target_ - this.v_;
 		t -= this.t0;
 		t /= d;
