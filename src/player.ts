@@ -1,7 +1,7 @@
 class PlayerView {
 	private angleX_ = 0;
 	private angleY_ = 0;
-	private rot_: sd.Float4;
+	private rot_!: sd.Float4;
 	private dir_ = [0, 0, -1];
 	private up_ = [0, 1, 0];
 	private velocity_ = [0, 0, 0];

@@ -137,6 +137,9 @@ class HintBox implements Interactable {
 				rotation = quat.fromEuler(0, math.deg2rad(35), 0);
 				this.msg = `"Five marks eternal power".\n"Mark the fives to absorb the darkness."`;
 				break;
+			default:
+				this.msg = "";
+				break;
 		}
 
 		this.info = makeEntity(scene, {

@@ -93,11 +93,11 @@ class BFD implements Interactable {
 
 
 class MainScene implements sd.SceneDelegate {
-	scene: sd.Scene;
-	gameState: GameState;
-	player: PlayerController;
-	sound: Sound;
-	msg: Mensajes;
+	scene!: sd.Scene;
+	gameState!: GameState;
+	player!: PlayerController;
+	sound!: Sound;
+	msg!: Mensajes;
 	ux: Interactable[] = [];
 	framers: Updateable[] = [];
 	end = false;
