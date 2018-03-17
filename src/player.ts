@@ -138,7 +138,6 @@ class PlayerController {
 	view: PlayerView;
 	private vpWidth_: number;
 	private vpHeight_: number;
-	private shakeOffset_ = [0, 0];
 	private baseSpeed_ = 70;
 	private speedVariance_ = 0;
 	private stepVariance_ = 0;
@@ -208,10 +207,6 @@ class PlayerController {
 
 	public shaking = false;
 
-	get shakeOffset() {
-		return this.shakeOffset_;
-	}
-
 	gameStateChanged(gs: GameState) {
 		if (this.stop_) {
 			return;
@@ -264,13 +259,6 @@ class PlayerController {
 		if (accel !== 0 && sideAccel !== 0) {
 			accel = Math.sign(accel) * 42.43;
 			sideAccel = Math.sign(sideAccel) * 42.43;
-		}
-
-		if (this.shaking) {
-			vec2.sub(this.shakeOffset_, vec2.random(this.shakeOffset_, 0.03), [0.015, 0.015]);
-		}
-		else {
-			vec2.set(this.shakeOffset_, 0, 0);
 		}
 
 		this.view.update(timeStep, accel, sideAccel);
